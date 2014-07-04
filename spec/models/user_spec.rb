@@ -19,6 +19,15 @@ describe "password not short" do
 	it{should be_invalid}
 end
 
+describe "user email should be downcase before saving" do
+let(:any_case_email) {"A@b.com"}
+it "should be converted to downcase" do
+	@user.email = any_case_email
+	@user.save
+	expect(@user.reload.email).to eq any_case_email.downcase
+end
+end
+
 describe "password authentication of user" do
 	before{@user.save}
 	let(:found_user) { User.find_by(email: @user.email)}
@@ -63,7 +72,7 @@ describe " Limited email length of user" do
 end
 describe "Emails are not valid" do
 	it "should be invalid" do
-	emailadd = %w[afe@gae+afw, egE@aefa_qwdq]
+	emailadd = %w[abc@a..com, afe@gae+afw, egE@aefa_qwdq]
 	emailadd.each do |invalid_address|
 	@user.email = invalid_address
 	expect(@user).not_to be_valid
