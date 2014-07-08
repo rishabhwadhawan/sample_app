@@ -15,6 +15,7 @@ describe "Static pages" do
       let(:page_title) {''}
       it_should_behave_like "all static pages"
       it { should_not have_title('| Home')}
+      it { should have_content('Ankit')}
   end
 
   describe "Help page" do
